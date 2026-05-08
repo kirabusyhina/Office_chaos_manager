@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+
+  <body>
+    <div class="sidebar">
+      <h2>⚡ IT System</h2>
+
+      <a href="/">Dashboard</a>
+      <a href="#">Systems</a>
+      <a href="#">Tickets</a>
+    </div>
+
+    <div class="main">
+      <div class="topbar">
+        <p>Welcome, {{ user }}</p>
+
+        <a href="/logout">
+          <button class="danger">Logout</button>
+        </a>
+      </div>
+
+      <h1>Dashboard</h1>
+
+      <div class="cards">
+        <div class="card">🟢 Systems OK</div>
+
+        <div class="card">🔴 Systems Down</div>
+
+        <div class="card">🎫 Tickets: {{ total }}</div>
+      </div>
+
+      <h2>Systems</h2>
+
+      <div class="systems">
+        {% for s in systems %}
+
+        <div class="system-card">
+          {% if s.status == "OK" %}
+          <span class="green-dot"></span>
+
+          {% elif s.status == "DOWN" %}
+          <span class="red-dot"></span>
+
+          {% else %}
+          <span class="yellow-dot"></span>
+          {% endif %} {{ s.name }} - {{ s.status }}
+        </div>
+
+        {% endfor %}
+      </div>
+
+      <br />
+
+      <form method="POST" action="/create_ticket">
+        <input type="text" name="title" placeholder="New issue" />
+
+        <button class="primary">Create</button>
+      </form>
+
+      <br />
+
+      <a href="/simulate">
+        <button class="danger">💥 Simulate Crash</button>
+      </a>
+
+      <h2>Tickets</h2>
+
+      {% for t in tickets %}
+
+      <div class="ticket">
+        {{ t[1] }} - {% if t[3] == "HIGH" %}
+        <span style="color: #ef4444; font-weight: 600"> HIGH </span>
+
+        {% elif t[3] == "Medium" %}
+        <span style="color: #f59e0b"> Medium </span>
+
+        {% else %}
+        <span style="color: #22c55e"> Low </span>
+        {% endif %}
+      </div>
+
+      {% endfor %}
+    </div>
+  </body>
+</html>
