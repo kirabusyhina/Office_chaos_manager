@@ -61,6 +61,10 @@ def dashboard():
 
     cursor.execute("SELECT * FROM systems")
     systems = cursor.fetchall()
+    
+    # Оновлюємо статус кожної системи на основі тікетів
+    for system in systems:
+        system["status"] = get_system_status(system["name"], tickets)
 
     return render_template(
         "dashboard.html",
@@ -102,6 +106,38 @@ def classify_ticket_priority(title):
         return "MEDIUM"
 
     return "LOW"
+
+
+def get_system_status(system_name, tickets):
+    """Визначає статус системи на основі тікетів"""
+    
+    system_keywords = {
+        "Web Server": ["web", "server", "frontend", "http", "port"],
+        "Database": ["database", "db", "sql", "mysql", "query", "connection"],
+        "API Service": ["api", "service", "backend", "rest"]
+    }
+    
+    keywords = system_keywords.get(system_name, [])
+    
+    has_high = False
+    has_medium = False
+    
+    for ticket in tickets:
+        title_lower = ticket["title"].lower()
+        
+        # Перевіряємо, чи тікет пов'язаний із цією системою
+        if any(keyword in title_lower for keyword in keywords):
+            if ticket["priority"] == "HIGH":
+                has_high = True
+            elif ticket["priority"] == "MEDIUM":
+                has_medium = True
+    
+    if has_high:
+        return "DOWN"
+    elif has_medium:
+        return "WARNING"
+    else:
+        return "OK"
 
 
 # створення тікета

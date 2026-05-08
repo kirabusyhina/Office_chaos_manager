@@ -26,9 +26,9 @@
       <h1>Dashboard</h1>
 
       <div class="cards">
-        <div class="card">🟢 Systems OK</div>
+        <div class="card">🟢 Systems OK: {{ systems|selectattr('status', 'equalto', 'OK')|list|length }}</div>
 
-        <div class="card">🔴 Systems Down</div>
+        <div class="card">🔴 Systems Down: {{ systems|selectattr('status', 'equalto', 'DOWN')|list|length }}</div>
 
         <div class="card">🎫 Tickets: {{ tickets|length }}</div>
       </div>
@@ -44,6 +44,9 @@
 
           {% elif s.status == "DOWN" %}
           <span class="red-dot"></span>
+
+          {% elif s.status == "WARNING" %}
+          <span class="yellow-dot"></span>
 
           {% else %}
           <span class="yellow-dot"></span>
