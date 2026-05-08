@@ -1,5 +1,3 @@
-from turtle import title
-
 from flask import Flask, render_template, request, redirect, session
 from db import get_connection
 
@@ -184,6 +182,18 @@ def simulate():
     conn.commit()
 
     return redirect("/")
+
+
+# debug route
+@app.route("/debug")
+def debug():
+    conn = get_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM tickets")
+    tickets = cursor.fetchall()
+    cursor.execute("SELECT * FROM systems")
+    systems = cursor.fetchall()
+    return {"tickets": tickets, "systems": systems}
 
 
 if __name__ == "__main__":

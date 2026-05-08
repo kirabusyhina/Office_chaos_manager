@@ -37,6 +37,11 @@ body {
   color: #2563eb;
 }
 
+.sidebar a.active {
+  color: #2563eb;
+  font-weight: 600;
+}
+
 /* MAIN */
 .main {
   margin-left: 170px;
@@ -90,6 +95,27 @@ h2 {
   display: flex;
   align-items: center;
   box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  transition: transform 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+}
+
+/* CHART */
+
+.chart-container {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 35px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.chart-container h3 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 20px;
 }
 
 /* SYSTEMS */
@@ -98,33 +124,102 @@ h2 {
   background: white;
   border-radius: 16px;
   padding: 18px 22px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  transition: transform 0.2s;
+}
+
+.system-card:hover {
+  transform: translateY(-2px);
+}
+
+.red-dot {
+  width: 12px;
+  height: 12px;
+  background: #ef4444;
+  border-radius: 50%;
+  margin-right: 12px;
+  animation: pulse 2s infinite;
+}
+
+.green-dot {
+  width: 12px;
+  height: 12px;
+  background: #22c55e;
+  border-radius: 50%;
+  margin-right: 12px;
+}
+
+.yellow-dot {
+  width: 12px;
+  height: 12px;
+  background: #f59e0b;
+  border-radius: 50%;
+  margin-right: 12px;
+}
+
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
+/* TICKETS */
+
+.ticket {
+  background: white;
+  border-radius: 16px;
+  padding: 18px 22px;
   margin-bottom: 12px;
   font-size: 16px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* TICKETS */
+
+.ticket {
+  background: white;
+  border-radius: 16px;
+  padding: 18px 22px;
+  margin-bottom: 12px;
+  font-size: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  animation: fadeIn 0.5s ease-in;
 }
 
 /* STATUS DOTS */
 
-.green-dot,
-.red-dot,
-.yellow-dot {
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  display: inline-block;
-  margin-right: 15px;
-}
-
 .green-dot {
+  width: 12px;
+  height: 12px;
   background: #22c55e;
+  border-radius: 50%;
+  margin-right: 12px;
 }
 
 .red-dot {
+  width: 12px;
+  height: 12px;
   background: #ef4444;
+  border-radius: 50%;
+  margin-right: 12px;
+  animation: pulse 2s infinite;
 }
 
 .yellow-dot {
+  width: 12px;
+  height: 12px;
   background: #f59e0b;
+  border-radius: 50%;
+  margin-right: 12px;
 }
 
 /* FORM */
