@@ -1,3 +1,5 @@
+from turtle import title
+
 from flask import Flask, render_template, request, redirect, session
 from db import get_connection
 
@@ -68,19 +70,46 @@ def dashboard():
     )
 
 
+def classify_ticket_priority(title):
+
+    title_lower = title.lower()
+
+    high_keywords = [
+        "crash",
+        "down",
+        "error",
+        "server",
+        "database",
+        "api",
+        "outage",
+        "failure"
+    ]
+
+    medium_keywords = [
+        "slow",
+        "lag",
+        "delay",
+        "timeout",
+        "hang",
+        "freeze",
+        "performance"
+    ]
+
+    if any(keyword in title_lower for keyword in high_keywords):
+        return "HIGH"
+
+    if any(keyword in title_lower for keyword in medium_keywords):
+        return "MEDIUM"
+
+    return "LOW"
+
+
 # створення тікета
 @app.route("/create_ticket", methods=["POST"])
 def create_ticket():
 
     title = request.form["title"]
-
-    priority = "Low"
-
-    if "crash" in title.lower():
-        priority = "HIGH"
-
-    elif "slow" in title.lower():
-        priority = "Medium"
+    priority = classify_ticket_priority(title)
 
     conn = get_connection()
 
@@ -110,9 +139,10 @@ def simulate():
     )
 
     # створення тікета
+    simulated_title = "API Service crashed 💥"
     cursor.execute(
         "INSERT INTO tickets (title, status, priority) VALUES (%s, %s, %s)",
-        ("API Service crashed 💥", "Open", "HIGH")
+        (simulated_title, "Open", classify_ticket_priority(simulated_title))
     )
 
     conn.commit()

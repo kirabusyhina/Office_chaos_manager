@@ -30,7 +30,7 @@
 
         <div class="card">🔴 Systems Down</div>
 
-        <div class="card">🎫 Tickets: {{ total }}</div>
+        <div class="card">🎫 Tickets: {{ tickets|length }}</div>
       </div>
 
       <h2>Systems</h2>
@@ -72,10 +72,10 @@
       {% for t in tickets %}
 
       <div class="ticket">
-        {{ t[1] }} - {% if t[3] == "HIGH" %}
-        <span style="color: #ef4444; font-weight: 600"> HIGH </span>
+        {{ t.title }} - {% if t.priority == "HIGH" %}
+        <span style="color: #ef4444; font-weight: 600"> High </span>
 
-        {% elif t[3] == "Medium" %}
+        {% elif t.priority == "MEDIUM" %}
         <span style="color: #f59e0b"> Medium </span>
 
         {% else %}
