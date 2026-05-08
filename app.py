@@ -181,7 +181,7 @@ def simulate():
 
     conn.commit()
 
-    return redirect("/")
+    return render_template("bsod.html")
 
 
 # debug route

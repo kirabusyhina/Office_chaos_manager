@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Error</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0000AA;
+            font-family: "MS DOS", "Courier New", monospace;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #FFFF55;
+        }
+
+        .bsod-container {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0000AA 0%, #00008B 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            text-align: center;
+            animation: flicker 0.15s infinite;
+        }
+
+        @keyframes flicker {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.98;
+            }
+        }
+
+        .bsod-content {
+            max-width: 800px;
+            text-align: left;
+            line-height: 1.8;
+        }
+
+        .bsod-header {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+            letter-spacing: 2px;
+        }
+
+        .bsod-text {
+            font-size: 14px;
+            margin-bottom: 15px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .error-code {
+            font-weight: bold;
+            margin: 20px 0;
+            font-size: 13px;
+        }
+
+        .bsod-footer {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 13px;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 49%, 100% {
+                opacity: 1;
+            }
+            50%, 99% {
+                opacity: 0;
+            }
+        }
+
+        .timer {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 30px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="bsod-container">
+        <div class="bsod-content">
+            <div class="bsod-header">💥 SYSTEM ERROR 💥</div>
+            
+            <div class="bsod-text">
+A fatal exception OE has occurred at 0168:C0434FE7. The current
+application will be terminated.
+
+* Press any key to terminate the current application.
+* Press CTRL+ALT+DEL again to restart your computer. You will
+  lose any unsaved information in all applications.
+            </div>
+
+            <div class="error-code">
+Error Code: 0x00000024 (NTFS_FILE_SYSTEM)
+Address: 0F654AB2 base at 00400000, DateStamp 4f5c1a1a
+            </div>
+
+            <div class="bsod-text">
+*** STOP: 0x00000024 (0x001904FB,0xF6F00D58,0xF6F00C54,0x80533B6F)
+
+Office Chaos Manager Critical System Failure
+API Service has crashed unexpectedly
+Database connection lost
+Memory corruption detected
+            </div>
+
+            <div class="timer">
+                Returning to dashboard in <span id="countdown">4.5</span> seconds...
+            </div>
+
+            <div class="bsod-footer">
+                _
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let timeLeft = 4.5;
+        const countdownElement = document.getElementById('countdown');
+
+        const interval = setInterval(() => {
+            timeLeft -= 0.1;
+            countdownElement.textContent = timeLeft.toFixed(1);
+
+            if (timeLeft <= 0) {
+                clearInterval(interval);
+                window.location.href = '/';
+            }
+        }, 100);
+
+        // Также можно вернуться при нажатии любой клавиши
+        document.addEventListener('keydown', () => {
+            clearInterval(interval);
+            window.location.href = '/';
+        });
+
+        // Вернуться при клике
+        document.addEventListener('click', () => {
+            clearInterval(interval);
+            window.location.href = '/';
+        });
+    </script>
+</body>
+</html>
